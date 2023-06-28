@@ -15,4 +15,9 @@ public class PlayerJump : MonoBehaviour
     {
         
     }
+
+    public void Jump(Rigidbody2D player, float force)
+    {
+        player.velocity = new Vector2(player.velocity.x, 4);
+    }
 }

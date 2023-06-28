@@ -16,8 +16,8 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    public void Move(float speed)
+    public void Move(Rigidbody2D player, float speed)
     {
-        transform.Translate(Vector3.up * speed * Time.deltaTime);
+        player.AddForce(Vector2.left * speed, ForceMode2D.Impulse);
     }
 }
