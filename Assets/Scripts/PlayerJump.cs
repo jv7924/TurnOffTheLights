@@ -4,20 +4,15 @@ using UnityEngine;
 
 public class PlayerJump : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void Jump(Rigidbody2D player, float speed)
     {
-        
+        if (IsGrounded())
+           player.velocity = new Vector2(player.velocity.x, speed);
     }
 
-    // Update is called once per frame
-    void Update()
+    private bool IsGrounded()
     {
-        
-    }
 
-    public void Jump(Rigidbody2D player, float force)
-    {
-        player.velocity = new Vector2(player.velocity.x, 4);
+        return false;
     }
 }

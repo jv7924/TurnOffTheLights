@@ -159,8 +159,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {fileID: 473639002}
   jump: {fileID: 473639005}
-  moveSpeed: 0
-  jumpSpeed: 0
+  moveSpeed: 4
+  jumpSpeed: 6
 --- !u!212 &473639000
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
         playerControl = new PlayerControl();
         playerControl.Player.Enable();
 
-        playerControl.Player.Move.performed += PerformMove;
+        // playerControl.Player.Move.performed += PerformMove;  Not used if moving with update
 
         playerControl.Player.Jump.performed += PerformJump;
     }
@@ -43,14 +43,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void PerformMove(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            movement.Move(playerRB, moveSpeed);
-        }
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -60,11 +52,23 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var vari = playerControl.Player.Jump.ReadValue<bool>();
-        if (vari)
-            jump.Jump(playerRB, jumpSpeed);
         
     }
 
-    
+    private void FixedUpdate()
+    {
+        float direction = playerControl.Player.Move.ReadValue<float>();
+        movement.Move(playerRB, direction, moveSpeed);
+    }
+
+
+
+    // Not used if moving with update
+    // private void PerformMove(InputAction.CallbackContext context)
+    // {
+    //     if (context.performed)
+    //     {
+    //         // movement.Move(playerRB, moveSpeed);
+    //     }
+    // }
 }

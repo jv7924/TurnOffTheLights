@@ -4,20 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void Move(Rigidbody2D player, float direction, float speed)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void Move(Rigidbody2D player, float speed)
-    {
-        player.AddForce(Vector2.left * speed, ForceMode2D.Impulse);
+        player.velocity = new Vector2(direction * speed, player.velocity.y);
     }
 }
