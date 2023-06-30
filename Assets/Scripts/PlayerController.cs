@@ -18,19 +18,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpSpeed = 0;
 
     private Rigidbody2D playerRB;
+    private Collider2D playerCol;
     private PlayerControl playerControl;
+    [SerializeField] private LayerMask layerMask;
 
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
     private void Awake()
     {
         playerRB = GetComponent<Rigidbody2D>();
+        playerCol = GetComponent<Collider2D>();
 
         playerControl = new PlayerControl();
         playerControl.Player.Enable();
 
-        // playerControl.Player.Move.performed += PerformMove;  Not used if moving with update
+        // playerControl.Player.Move.performed += PerformMove;  //Not used if moving with update
 
         playerControl.Player.Jump.performed += PerformJump;
     }
@@ -59,6 +59,8 @@ public class PlayerController : MonoBehaviour
     {
         float direction = playerControl.Player.Move.ReadValue<float>();
         movement.Move(playerRB, direction, moveSpeed);
+
+        jump.Grounded(playerCol, layerMask);
     }
 
 

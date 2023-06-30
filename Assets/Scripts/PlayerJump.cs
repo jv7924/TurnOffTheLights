@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class PlayerJump : MonoBehaviour
 {
+    private bool isGrounded = false;
+
     public void Jump(Rigidbody2D player, float speed)
     {
-        if (IsGrounded())
+        if (isGrounded)
            player.velocity = new Vector2(player.velocity.x, speed);
     }
 
-    private bool IsGrounded()
+    public void Grounded(Collider2D col, LayerMask layerMask)
     {
+        float distCast = .05f;
+        float angle = 0f;
+        
+        RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size, angle, Vector2.down, distCast, layerMask);
 
-        return false;
+        if (raycastHit.collider != null)
+            isGrounded = true;
+        
+        else
+            isGrounded = false;
     }
 }
