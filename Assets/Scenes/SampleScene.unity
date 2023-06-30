@@ -161,6 +161,9 @@ MonoBehaviour:
   jump: {fileID: 473639005}
   moveSpeed: 4
   jumpSpeed: 6
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!212 &473639000
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -529,7 +532,7 @@ GameObject:
   - component: {fileID: 1478061880}
   - component: {fileID: 1478061879}
   - component: {fileID: 1478061878}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
