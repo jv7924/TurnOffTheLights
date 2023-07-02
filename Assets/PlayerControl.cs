@@ -92,6 +92,56 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Light"",
+            ""id"": ""da58f76f-5213-46ed-bad6-4a9de2615d53"",
+            ""actions"": [
+                {
+                    ""name"": ""MoveLight"",
+                    ""type"": ""Value"",
+                    ""id"": ""37385c83-fa25-49b9-a008-45aa067338a8"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""WS"",
+                    ""id"": ""ecb59e3f-1c15-4e06-90b0-5f819ed2dd91"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLight"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""589963e8-19ba-4d7f-927f-1239f4256b3a"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""995927e6-4617-4c56-9236-db79eccf7dc1"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -100,6 +150,9 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        // Light
+        m_Light = asset.FindActionMap("Light", throwIfNotFound: true);
+        m_Light_MoveLight = m_Light.FindAction("MoveLight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -196,9 +249,46 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Light
+    private readonly InputActionMap m_Light;
+    private ILightActions m_LightActionsCallbackInterface;
+    private readonly InputAction m_Light_MoveLight;
+    public struct LightActions
+    {
+        private @PlayerControl m_Wrapper;
+        public LightActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MoveLight => m_Wrapper.m_Light_MoveLight;
+        public InputActionMap Get() { return m_Wrapper.m_Light; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(LightActions set) { return set.Get(); }
+        public void SetCallbacks(ILightActions instance)
+        {
+            if (m_Wrapper.m_LightActionsCallbackInterface != null)
+            {
+                @MoveLight.started -= m_Wrapper.m_LightActionsCallbackInterface.OnMoveLight;
+                @MoveLight.performed -= m_Wrapper.m_LightActionsCallbackInterface.OnMoveLight;
+                @MoveLight.canceled -= m_Wrapper.m_LightActionsCallbackInterface.OnMoveLight;
+            }
+            m_Wrapper.m_LightActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @MoveLight.started += instance.OnMoveLight;
+                @MoveLight.performed += instance.OnMoveLight;
+                @MoveLight.canceled += instance.OnMoveLight;
+            }
+        }
+    }
+    public LightActions @Light => new LightActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+    }
+    public interface ILightActions
+    {
+        void OnMoveLight(InputAction.CallbackContext context);
     }
 }

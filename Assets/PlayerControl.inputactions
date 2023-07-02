@@ -70,6 +70,56 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "Light",
+            "id": "da58f76f-5213-46ed-bad6-4a9de2615d53",
+            "actions": [
+                {
+                    "name": "MoveLight",
+                    "type": "Value",
+                    "id": "37385c83-fa25-49b9-a008-45aa067338a8",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "WS",
+                    "id": "ecb59e3f-1c15-4e06-90b0-5f819ed2dd91",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveLight",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "589963e8-19ba-4d7f-927f-1239f4256b3a",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveLight",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "995927e6-4617-4c56-9236-db79eccf7dc1",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveLight",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
         }
     ],
     "controlSchemes": []
