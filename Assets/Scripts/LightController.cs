@@ -28,6 +28,7 @@ public class LightController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If inverted, try having the direction inverted as well or try another rotation system
         float direction = lightControl.Light.MoveLight.ReadValue<float>();
         
         LightMovement(direction);
