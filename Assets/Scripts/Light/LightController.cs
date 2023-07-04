@@ -5,12 +5,20 @@ using UnityEngine.InputSystem;
 
 public class LightController : MonoBehaviour
 {
-    private PlayerControl lightControl;
+    [Header("Scripts")]
+    [SerializeField] private LightRotation lightRotation;
+    [SerializeField] private LightFlicker lightFlicker;
+
+    [Space(5)]
+    [Header("Rotation Variables")]
+    [SerializeField, Range(1f, 5f), Tooltip("Flashlight rotate speed")]
+    private float rotateSpeed = 2.5f;
+    [SerializeField, Range(30f, 60f), Tooltip("Amount of rotation applied")]
     private float rotateAngle = 45f;
 
-    [SerializeField, Range(1f, 5f)]
-    private float speed = 1f;
-    
+
+    private PlayerControl lightControl;
+
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -19,6 +27,7 @@ public class LightController : MonoBehaviour
         lightControl = new PlayerControl();
         lightControl.Light.Enable();
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,16 +37,8 @@ public class LightController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // If inverted, try having the direction inverted as well or try another rotation system
         float direction = lightControl.Light.MoveLight.ReadValue<float>();
         
-        LightMovement(direction);
-    }
-
-    private void LightMovement(float direction)
-    {
-        Quaternion rotateTo = Quaternion.Euler(0f, 0f, direction * rotateAngle);
-        // transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, rotateTo, Time.deltaTime * speed);
-        transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, rotateTo, Time.deltaTime * speed);
+        lightRotation.LightRotate(direction, rotateAngle, rotateSpeed);
     }
 }

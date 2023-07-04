@@ -223,7 +223,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473638998}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.86, y: -1.78, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -836,7 +836,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1400418761}
   - component: {fileID: 1400418762}
+  - component: {fileID: 1400418765}
   - component: {fileID: 1400418763}
+  - component: {fileID: 1400418764}
   m_Layer: 0
   m_Name: Flash Light
   m_TagString: Untagged
@@ -924,7 +926,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775664bb8fa311d4db7193a9c2913a68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+--- !u!114 &1400418764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400418760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdd6cb453b697a04d9c9b8db2d9572bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1400418765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400418760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44456e9e63d49eb4a9db40d91c500f9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightRotation: {fileID: 1400418763}
+  lightFlicker: {fileID: 1400418764}
+  rotateSpeed: 4.04
+  rotateAngle: 45
 --- !u!1 &1478061877
 GameObject:
   m_ObjectHideFlags: 0
