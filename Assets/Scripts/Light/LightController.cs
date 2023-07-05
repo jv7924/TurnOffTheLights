@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class LightController : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class LightController : MonoBehaviour
     [SerializeField, Range(30f, 60f), Tooltip("Amount of rotation applied")]
     private float rotateAngle = 45f;
 
-
+    public Light2D flashLight;
     private PlayerControl lightControl;
 
     /// <summary>
@@ -31,7 +32,7 @@ public class LightController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(lightFlicker.Flicker(flashLight));
     }
 
     // Update is called once per frame

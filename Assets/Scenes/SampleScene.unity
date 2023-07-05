@@ -954,6 +954,7 @@ MonoBehaviour:
   lightFlicker: {fileID: 1400418764}
   rotateSpeed: 4.04
   rotateAngle: 45
+  flashLight: {fileID: 2033576645}
 --- !u!1 &1478061877
 GameObject:
   m_ObjectHideFlags: 0
