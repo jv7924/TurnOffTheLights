@@ -27,6 +27,7 @@ public class LightController : MonoBehaviour
     {
         lightControl = new PlayerControl();
         lightControl.Light.Enable();
+
     }
 
     // Start is called before the first frame update
@@ -39,7 +40,11 @@ public class LightController : MonoBehaviour
     void Update()
     {
         float direction = lightControl.Light.MoveLight.ReadValue<float>();
-        
-        lightRotation.LightRotate(direction, rotateAngle, rotateSpeed);
+        if (gameObject.transform.lossyScale.x < 0)
+            lightRotation.LightRotate(direction, -rotateAngle, rotateSpeed);
+        else    
+            lightRotation.LightRotate(direction, rotateAngle, rotateSpeed);
+
+    
     }
 }
