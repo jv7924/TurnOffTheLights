@@ -424,7 +424,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473638998}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.94, y: -2.78, z: 0}
+  m_LocalPosition: {x: -2.64, y: 2.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -605,7 +605,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.94, y: -1.28, z: -10}
+  m_LocalPosition: {x: -2.64, y: 3.97, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -772,7 +772,7 @@ GameObject:
   - component: {fileID: 608300109}
   - component: {fileID: 608300108}
   m_Layer: 0
-  m_Name: Sprites
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -790,7 +790,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9360b279d23a64f4a8dde51755425d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 473639001}
+  distCast: 0.05
+  angle: 0
+  col: {fileID: 608300112}
   moveSpeed: 5
 --- !u!50 &608300109
 Rigidbody2D:
@@ -873,7 +875,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 608300107}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.29, y: -3.34, z: 0}
+  m_LocalPosition: {x: -5.633, y: -3.588, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1187,7 +1189,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 741440295}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.94, y: -1.28, z: -10}
+  m_LocalPosition: {x: -2.64, y: 3.97, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
