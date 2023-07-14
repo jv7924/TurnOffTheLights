@@ -49,17 +49,24 @@ public class Enemy : MonoBehaviour
 
     private void CanWalk()
     {
-
         RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size - new Vector3(0, .1f, 0), angle, Vector2.right, distCast);
 
-
+        Color rayColor;
         if (raycastHit.collider != null)
         {
-            canWalk = false;
-        }
-        else 
-        {
+            rayColor = Color.green;
             canWalk = true;
         }
+        else
+        {
+            rayColor = Color.red;
+            canWalk = false;
+        }
+
+        Debug.DrawRay(col.bounds.center + new Vector3(0f, col.bounds.extents.y - .05f, 0f), Vector3.right * (col.bounds.extents.x + distCast), rayColor);
+        Debug.DrawRay(col.bounds.center - new Vector3(0f, col.bounds.extents.y - .05f, 0f), Vector3.right * (col.bounds.extents.x + distCast), rayColor);
+        Debug.DrawRay(col.bounds.center + new Vector3(col.bounds.extents.x + distCast, 0f, 0f), Vector3.down * col.bounds.extents.y + new Vector3(0f, .05f, 0f), rayColor);
+        Debug.DrawRay(col.bounds.center + new Vector3(col.bounds.extents.x + distCast, 0f, 0f), Vector3.up * col.bounds.extents.y - new Vector3(0f, .05f, 0f), rayColor);
+
     }
 }
