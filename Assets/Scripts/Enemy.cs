@@ -8,10 +8,12 @@ public class Enemy : MonoBehaviour
     private float distCast = .1f;
     private float angle = 0f;
 
+    // Layers
     [SerializeField] 
-    private LayerMask layerMask;
+    private LayerMask groundLayer;
     [SerializeField] 
-    private LayerMask layer;
+    private LayerMask playerLayer;
+
     private Collider2D col;
     private Rigidbody2D rb;
 
@@ -28,32 +30,32 @@ public class Enemy : MonoBehaviour
         col = GetComponent<Collider2D>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void FixedUpdate()
     {
         CanWalk();
-        rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
-    }
 
-    // private void FollowPlayer(Vector2 direction)
-    // {
-    //     rb.velocity = new Vector2(transform.position.x + direction.x * moveSpeed + 10, rb.velocity.y);
-    //     // rb.MovePosition((Vector2)transform.position + direction * moveSpeed * Time.deltaTime);
-    // }
+        // if (PlayerInRange())
+        //     rb.velocity = new Vector2(direction * moveSpeed * 2, rb.velocity.y);
+        // else
+            rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
+    }
 
     private void CanWalk()
     {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size - new Vector3(0, .1f, 0), angle, new Vector2(direction, 0f), distCast, layerMask);
+        // RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size - new Vector3(0, .1f, 0), angle, new Vector2(direction, 0f), distCast, groundLayer);
 
+        RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center, new Vector2(direction, 0f), distCast + .01f, groundLayer);
+
+        Color rayCol;
         if (raycastHit.collider != null)
         {
-            direction  *= -1;
+            rayCol = Color.red;
+            // direction  *= -1;
         }
+        else 
+            rayCol = Color.green;
+
+        Debug.DrawRay(col.bounds.center, new Vector2(direction, 0f) * (col.bounds.extents.x + distCast), rayCol);
 
         // Debug.DrawRay(col.bounds.center + new Vector3(0f, col.bounds.extents.y - .05f, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + distCast), rayColor);
         // Debug.DrawRay(col.bounds.center - new Vector3(0f, col.bounds.extents.y - .05f, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + distCast), rayColor);
@@ -61,15 +63,19 @@ public class Enemy : MonoBehaviour
         // Debug.DrawRay(col.bounds.center + new Vector3(col.bounds.extents.x + distCast, 0f, 0f), Vector3.up * col.bounds.extents.y - new Vector3(0f, .05f, 0f), rayColor);
     }
 
-    // private bool PlayerInRange()
-    // {
-    //     RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center, new Vector2(direction, 0f), 5f, layer);
+    private bool PlayerInRange()
+    {
+        // RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center, new Vector2(direction, 0f), 5f, playerLayer);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size, angle, new Vector2(direction, 0f), 5f, playerLayer);
 
-    //     if (raycastHit.collider != null)
-    //     {
-    //         return true;
-    //     }
-    //     else
-    //         return false;
-    // }
+        Debug.DrawRay(col.bounds.center + new Vector3(0f, col.bounds.extents.y, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + 5), Color.black);
+        Debug.DrawRay(col.bounds.center - new Vector3(0f, col.bounds.extents.y, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + 5), Color.black);
+
+        if (raycastHit.collider != null)
+        {
+            return true;
+        }
+        else
+            return false;
+    }
 }

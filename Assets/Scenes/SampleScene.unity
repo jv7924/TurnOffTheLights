@@ -769,8 +769,8 @@ GameObject:
   - component: {fileID: 608300111}
   - component: {fileID: 608300110}
   - component: {fileID: 608300109}
-  - component: {fileID: 608300108}
   - component: {fileID: 608300112}
+  - component: {fileID: 608300108}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -791,10 +791,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distCast: 0.5
-  layerMask:
+  groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  layer:
+  playerLayer:
     serializedVersion: 2
     m_Bits: 64
   moveSpeed: 2
@@ -1331,7 +1331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1038448148
 SpriteRenderer:
   m_ObjectHideFlags: 0
