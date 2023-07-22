@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField, Range(.01f, .5f)]
+    [SerializeField, Range(.1f, 1f)]
     private float distCast = .1f;
     private float angle = 0f;
 
@@ -22,6 +22,11 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float direction = 1;
 
+    [SerializeField]
+    private bool groundCheck = true;
+    [SerializeField]
+    private bool wallCheck = true;
+
     // private Vector2 direction;
     // Start is called before the first frame update
     void Start()
@@ -32,35 +37,56 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CanWalk();
+        if (wallCheck)
+            WallCheck();
+        
+        if (groundCheck)
+            GroundCheck();
 
-        // if (PlayerInRange())
-        //     rb.velocity = new Vector2(direction * moveSpeed * 2, rb.velocity.y);
-        // else
+        if (PlayerInRange())
+            rb.velocity = new Vector2(direction * moveSpeed * 2, rb.velocity.y);
+        else
             rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
     }
 
-    private void CanWalk()
+    private void WallCheck()
     {
-        // RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size - new Vector3(0, .1f, 0), angle, new Vector2(direction, 0f), distCast, groundLayer);
-
-        RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center, new Vector2(direction, 0f), distCast + .01f, groundLayer);
+        RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center + new Vector3(.1f * direction, 0f, 0f), new Vector2(direction, 0f), distCast, groundLayer);
 
         Color rayCol;
         if (raycastHit.collider != null)
         {
             rayCol = Color.red;
-            // direction  *= -1;
+            direction  *= -1;
         }
         else 
             rayCol = Color.green;
 
-        Debug.DrawRay(col.bounds.center, new Vector2(direction, 0f) * (col.bounds.extents.x + distCast), rayCol);
+        Debug.DrawRay(col.bounds.center + new Vector3(.1f * direction, 0f, 0f), new Vector2(direction, 0f) * distCast, rayCol);
 
-        // Debug.DrawRay(col.bounds.center + new Vector3(0f, col.bounds.extents.y - .05f, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + distCast), rayColor);
-        // Debug.DrawRay(col.bounds.center - new Vector3(0f, col.bounds.extents.y - .05f, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + distCast), rayColor);
+        // RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size - new Vector3(0, .1f, 0), angle, new Vector2(direction, 0f), distCast, groundLayer);
+        // Debug.DrawRay(col.bounds.center + new Vector3(0f, col.bounds.extents.y - .05f, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + distCast), rayCol);
+        // Debug.DrawRay(col.bounds.center - new Vector3(0f, col.bounds.extents.y - .05f, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + distCast), rayCol);
         // Debug.DrawRay(col.bounds.center + new Vector3(col.bounds.extents.x + distCast, 0f, 0f), Vector3.down * col.bounds.extents.y + new Vector3(0f, .05f, 0f), rayColor);
         // Debug.DrawRay(col.bounds.center + new Vector3(col.bounds.extents.x + distCast, 0f, 0f), Vector3.up * col.bounds.extents.y - new Vector3(0f, .05f, 0f), rayColor);
+    }
+
+    private void GroundCheck()
+    {
+        RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center + new Vector3(col.bounds.extents.x + .01f, -.01f, 0f), new Vector2(direction, -1.5f), distCast, groundLayer);
+
+        Color rayCol;
+        if (raycastHit.collider != null)
+        {
+            rayCol = Color.red;
+        }
+        else
+        {
+            direction *= -1;
+            rayCol = Color.green;
+        } 
+
+        Debug.DrawRay(col.bounds.center + new Vector3(col.bounds.extents.x * direction - .01f, -.01f, 0f), new Vector2(direction, -1.5f) * distCast, rayCol);
     }
 
     private bool PlayerInRange()
