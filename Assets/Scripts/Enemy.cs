@@ -73,7 +73,8 @@ public class Enemy : MonoBehaviour
 
     private void GroundCheck()
     {
-        RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center + new Vector3(col.bounds.extents.x + .01f, -.01f, 0f), new Vector2(direction, -1.5f), distCast, groundLayer);
+        // RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center + new Vector3(col.bounds.extents.x + .01f, -.01f, 0f), new Vector2(direction, -1.5f), distCast, groundLayer);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(new Vector2(direction * (col.bounds.center.x + col.bounds.extents.x + .25f), col.bounds.center.y - col.bounds.extents.y), new Vector2(.5f, .5f), angle, new Vector2(direction, 0f), 0, groundLayer);
 
         Color rayCol;
         if (raycastHit.collider != null)
@@ -82,11 +83,14 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            direction *= -1;
-            rayCol = Color.green;
+            // direction *= -1;
+            rayCol = Color.blue;
         } 
 
-        Debug.DrawRay(col.bounds.center + new Vector3(col.bounds.extents.x * direction - .01f, -.01f, 0f), new Vector2(direction, -1.5f) * distCast, rayCol);
+        Debug.DrawRay(new Vector2(col.bounds.center.x + col.bounds.extents.x, col.bounds.center.y - col.bounds.extents.y) * new Vector2(direction, direction), new Vector2(direction * .5f, 0f), rayCol);
+        Debug.DrawRay(new Vector2(col.bounds.center.x + col.bounds.extents.x, col.bounds.center.y - col.bounds.extents.y - .25f) * new Vector2(direction, direction), new Vector2(direction * .5f, 0f), rayCol);
+
+        // Debug.DrawRay(col.bounds.center + new Vector3(col.bounds.extents.x * direction - .01f, -.01f, 0f), new Vector2(direction, -1.5f) * distCast, rayCol);
     }
 
     private bool PlayerInRange()
@@ -94,8 +98,8 @@ public class Enemy : MonoBehaviour
         // RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center, new Vector2(direction, 0f), 5f, playerLayer);
         RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size, angle, new Vector2(direction, 0f), 5f, playerLayer);
 
-        Debug.DrawRay(col.bounds.center + new Vector3(0f, col.bounds.extents.y, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + 5), Color.black);
-        Debug.DrawRay(col.bounds.center - new Vector3(0f, col.bounds.extents.y, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + 5), Color.black);
+        // Debug.DrawRay(col.bounds.center + new Vector3(0f, col.bounds.extents.y, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + 5), Color.black);
+        // Debug.DrawRay(col.bounds.center - new Vector3(0f, col.bounds.extents.y, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + 5), Color.black);
 
         if (raycastHit.collider != null)
         {
