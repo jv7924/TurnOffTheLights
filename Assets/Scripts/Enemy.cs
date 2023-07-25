@@ -74,7 +74,7 @@ public class Enemy : MonoBehaviour
     private void GroundCheck()
     {
         // RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center + new Vector3(col.bounds.extents.x + .01f, -.01f, 0f), new Vector2(direction, -1.5f), distCast, groundLayer);
-        RaycastHit2D raycastHit = Physics2D.BoxCast(new Vector2(direction * (col.bounds.center.x + col.bounds.extents.x + .25f), col.bounds.center.y - col.bounds.extents.y), new Vector2(.5f, .5f), angle, new Vector2(direction, 0f), 0, groundLayer);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(new Vector2(col.bounds.center.x + (col.bounds.extents.x + .25f) * direction, col.bounds.center.y - col.bounds.extents.y), new Vector2(.5f, .5f), angle, new Vector2(direction, 0f), 0, groundLayer);
 
         Color rayCol;
         if (raycastHit.collider != null)
@@ -83,12 +83,12 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            // direction *= -1;
+            direction *= -1;
             rayCol = Color.blue;
         } 
 
-        Debug.DrawRay(new Vector2(col.bounds.center.x + col.bounds.extents.x, col.bounds.center.y - col.bounds.extents.y) * new Vector2(direction, direction), new Vector2(direction * .5f, 0f), rayCol);
-        Debug.DrawRay(new Vector2(col.bounds.center.x + col.bounds.extents.x, col.bounds.center.y - col.bounds.extents.y - .25f) * new Vector2(direction, direction), new Vector2(direction * .5f, 0f), rayCol);
+        Debug.DrawRay(new Vector2(col.bounds.center.x + col.bounds.extents.x * direction, col.bounds.center.y - col.bounds.extents.y), new Vector2(direction * .5f, 0f), rayCol);
+        Debug.DrawRay(new Vector2(col.bounds.center.x + col.bounds.extents.x * direction, col.bounds.center.y - col.bounds.extents.y - .25f), new Vector2(direction * .5f, 0f), rayCol);
 
         // Debug.DrawRay(col.bounds.center + new Vector3(col.bounds.extents.x * direction - .01f, -.01f, 0f), new Vector2(direction, -1.5f) * distCast, rayCol);
     }

@@ -30,8 +30,6 @@ public class PlayerController : MonoBehaviour
         playerControl = new PlayerControl();
         playerControl.Player.Enable();
 
-        // playerControl.Player.Move.performed += PerformMove;  //Not used if moving with update
-
         playerControl.Player.Jump.performed += PerformJump;
     }
 
@@ -62,15 +60,4 @@ public class PlayerController : MonoBehaviour
 
         jump.Grounded(playerCol, layerMask);
     }
-
-
-
-    // Not used if moving with update
-    // private void PerformMove(InputAction.CallbackContext context)
-    // {
-    //     if (context.performed)
-    //     {
-    //         // movement.Move(playerRB, moveSpeed);
-    //     }
-    // }
 }

@@ -17,7 +17,7 @@ public class PlayerJump : MonoBehaviour
         float distCast = .05f;
         float angle = 0f;
         
-        RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size, angle, Vector2.down, distCast, layerMask);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size - new Vector3(.01f, 0f, 0f), angle, Vector2.down, distCast, layerMask);
 
         if (raycastHit.collider != null)
             isGrounded = true;
