@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [Header("Scripts")]
     [SerializeField] private PlayerMovement movement;
     [SerializeField] private PlayerJump jump;
+    [SerializeField] private PlayerMaterialChange change;
     
     [Space(5)]
     [Header("Movement Variables")]
@@ -21,6 +22,8 @@ public class PlayerController : MonoBehaviour
     private Collider2D playerCol;
     private PlayerControl playerControl;
     [SerializeField] private LayerMask layerMask;
+    
+    [SerializeField] private PhysicsMaterial2D material2D;
 
     private void Awake()
     {
@@ -57,6 +60,9 @@ public class PlayerController : MonoBehaviour
     {
         float direction = playerControl.Player.Move.ReadValue<float>();
         movement.Move(playerRB, direction, moveSpeed);
+
+        change.ChangeMaterial(playerCol, direction, layerMask, material2D);
+
 
         jump.Grounded(playerCol, layerMask);
     }

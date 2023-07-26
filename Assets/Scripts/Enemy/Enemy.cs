@@ -96,10 +96,10 @@ public class Enemy : MonoBehaviour
     private bool PlayerInRange()
     {
         // RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center, new Vector2(direction, 0f), 5f, playerLayer);
-        RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size, angle, new Vector2(direction, 0f), 5f, playerLayer);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size - new Vector3(0, .5f, 1), angle, new Vector2(direction, 0f), 5f, playerLayer);
 
-        // Debug.DrawRay(col.bounds.center + new Vector3(0f, col.bounds.extents.y, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + 5), Color.black);
-        // Debug.DrawRay(col.bounds.center - new Vector3(0f, col.bounds.extents.y, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + 5), Color.black);
+        Debug.DrawRay(col.bounds.center + new Vector3(0f, col.bounds.extents.y, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + 5), Color.black);
+        Debug.DrawRay(col.bounds.center - new Vector3(0f, col.bounds.extents.y, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + 5), Color.black);
 
         if (raycastHit.collider != null)
         {

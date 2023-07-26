@@ -15,8 +15,6 @@ public class PlayerMovement : MonoBehaviour
         if (direction != 0)
             gameObject.transform.localScale = new Vector3(direction, gameObject.transform.localScale.y, gameObject.transform.localScale.z);
     }
-
-
     // private void FlipPlayer(float direction)
     // {
         // Quaternion leftRot = Quaternion.Euler(0f, 180f, 0f);
