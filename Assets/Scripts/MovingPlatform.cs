@@ -31,21 +31,7 @@ public class MovingPlatform : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-
-    }
-
-    private IEnumerator MovePlatform(Vector2 startPosition, Vector2 endPosition)
-    {
-        float i = 0;
-        float rate = 1f / speed;
-
-        while (i < 1f)
-        {
-            i += Time.deltaTime * rate;
-            platRB.MovePosition(Vector2.Lerp(startPosition, endPosition, i));
-
-            yield return null;
-        }
+        Debug.Log(platRB.velocity);
     }
 
     IEnumerator LerpPosition(Vector2 targetPosition, float duration)
@@ -58,6 +44,11 @@ public class MovingPlatform : MonoBehaviour
             yield return null;
         }
         transform.position = targetPosition;
+    }
+
+    private void MovePlatform(Vector2 targetPosition, float speed)
+    {
+        
     }
 
     // private IEnumerator Plat(Transform start, Transform end, float speed)
