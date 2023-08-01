@@ -639,10 +639,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3d3df9f5c4cba546b6297edb2aca1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 2
   startPos: {fileID: 33616534}
   endPos: {fileID: 1280648146}
   platRB: {fileID: 492448685}
+  x: 0
+  y: 0
 --- !u!50 &492448685
 Rigidbody2D:
   serializedVersion: 4
@@ -2334,7 +2336,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1280648145}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.79, y: 1.72, z: -0.19662564}
+  m_LocalPosition: {x: 22.79, y: 6.18, z: -0.19662564}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
