@@ -21,7 +21,6 @@ public class MovingPlatform : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // StartCoroutine(MovePlatform(startPos.position, endPos.position));
         // StartCoroutine(LerpPosition(endPos.position, speed));
 
         // StartCoroutine(Plat(startPos, endPos, speed));
@@ -35,7 +34,8 @@ public class MovingPlatform : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        // Debug.Log(platRB.velocity);
+        MovePlatform(startPos.position, endPos.position, 2);
+        Debug.Log(platRB.velocity);
     }
 
     // IEnumerator LerpPosition(Vector2 targetPosition, float duration)
@@ -52,30 +52,17 @@ public class MovingPlatform : MonoBehaviour
 
 
     // Moving platform using velocity
-    // private void MovePlatform(Vector2 start, Vector2 end, float speed)
-    // {
-    //     if ((Vector2)transform.position != end)
-    //     {
-    //         platRB.velocity = new Vector2(end.x - start.x, end.y - start.y).normalized * speed;
-    //     }
-    // }
+    private void MovePlatform(Vector2 start, Vector2 end, float speed)
+    {
+        if ((Vector2)transform.position != end)
+        {
+            platRB.velocity = new Vector2(end.x - start.x, end.y - start.y).normalized * speed;
+        }
+    }
 
-    // private void Comp(Vector2 currentPos, Vector2 stopPos)
-    // {
-    //     if (Mathf.cur)
-    // }
+    // x: 1.94, y: 0.49
+    private void VelocityVector()
+    {
 
-    // private IEnumerator Plat(Transform start, Transform end, float speed)
-    // {
-    //     while(true)
-    //     {
-    //         if (gameObject.transform.position == start.position)
-    //         {
-    //             platRB.MovePosition(gameObject.transform.position + end.position * speed * Time.deltaTime);
-    //         }
-    //         yield return null;
-    //     }
-
-    // }
-    
+    }
 }
