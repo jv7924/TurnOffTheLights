@@ -21,12 +21,9 @@ public class MovingPlatform : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // StartCoroutine(LerpPosition(endPos.position, speed));
+        StartCoroutine(LerpPosition(endPos.position, speed));
 
         // StartCoroutine(Plat(startPos, endPos, speed));
-
-        Debug.Log(speed/Mathf.Sqrt(Mathf.Pow(endPos.position.x, 2) + Mathf.Pow(endPos.position.y, 2)) * endPos.position.x);
-        Debug.Log(speed/Mathf.Sqrt(Mathf.Pow(endPos.position.x, 2) + Mathf.Pow(endPos.position.y, 2)) * endPos.position.y);
     }
 
     /// <summary>
@@ -34,29 +31,27 @@ public class MovingPlatform : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        MovePlatform(startPos.position, endPos.position, 2);
-        Debug.Log(platRB.velocity);
     }
 
-    // IEnumerator LerpPosition(Vector2 targetPosition, float duration)
-    // {
-    //     float time = 0;
-    //     while (time < duration)
-    //     {
-    //         platRB.MovePosition(Vector2.Lerp(startPos.position, targetPosition, time / duration));
-    //         time += Time.deltaTime;
-    //         yield return null;
-    //     }
-    //     transform.position = targetPosition;
-    // }
+    IEnumerator LerpPosition(Vector2 targetPosition, float duration)
+    {
+        float time = 0;
+        while (time < duration)
+        {
+            platRB.MovePosition(Vector2.Lerp(startPos.position, targetPosition, time / duration));
+            time += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = targetPosition;
+    }
 
 
     // Moving platform using velocity
-    private void MovePlatform(Vector2 start, Vector2 end, float speed)
+    private void MovePlatform(Vector2 start, Vector2 end)
     {
         if ((Vector2)transform.position != end)
         {
-            platRB.velocity = new Vector2(end.x - start.x, end.y - start.y).normalized * speed;
+            platRB.velocity = new Vector2(end.x - start.x, end.y - start.y).normalized;
         }
     }
 

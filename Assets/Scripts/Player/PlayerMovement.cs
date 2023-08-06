@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public bool touchingPlat = false;
+
     public void Move(Rigidbody2D player, float direction, float speed)
     {
         FlipPlayer(direction);
