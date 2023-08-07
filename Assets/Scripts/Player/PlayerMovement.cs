@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public bool touchingPlat = false;
-
-    public void Move(Rigidbody2D player, float direction, float speed)
+    public void Move(Rigidbody2D player, float direction, float speed, bool onPlat, MovingPlatform platform)
     {
         FlipPlayer(direction);
-        player.velocity = new Vector2(direction * speed, player.velocity.y);
+        if (!onPlat)
+        {
+            player.velocity = new Vector2(direction * speed, player.velocity.y);
+            Debug.Log(player.velocity);
+        }
+        else if (onPlat)
+        {
+            player.velocity = new Vector2((direction * speed) + platform.GetPlatVelocity().x, player.velocity.y + platform.GetPlatVelocity().y);
+            Debug.Log(player.velocity);
+        }
     }
 
     private void FlipPlayer(float direction)

@@ -392,6 +392,7 @@ MonoBehaviour:
   movement: {fileID: 473639002}
   jump: {fileID: 473639005}
   change: {fileID: 473639006}
+  platform: {fileID: 492448684}
   moveSpeed: 4
   jumpSpeed: 7
   layerMask:
@@ -639,10 +640,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3d3df9f5c4cba546b6297edb2aca1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
-  startPos: {fileID: 33616534}
-  endPos: {fileID: 1280648146}
+  speed: 5
+  start: {fileID: 33616534}
+  end: {fileID: 1280648146}
   platRB: {fileID: 492448685}
+  platVelocity: {x: 0, y: 0}
 --- !u!50 &492448685
 Rigidbody2D:
   serializedVersion: 4

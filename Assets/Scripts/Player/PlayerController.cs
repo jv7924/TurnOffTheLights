@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerMovement movement;
     [SerializeField] private PlayerJump jump;
     [SerializeField] private PlayerMaterialChange change;
+    [SerializeField] private MovingPlatform platform;
     
     [Space(5)]
     [Header("Movement Variables")]
@@ -24,6 +25,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask layerMask;
     
     [SerializeField] private PhysicsMaterial2D material2D;
+
+    private bool onPlat = false;
 
     private void Awake()
     {
@@ -59,10 +62,25 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         float direction = playerControl.Player.Move.ReadValue<float>();
-        movement.Move(playerRB, direction, moveSpeed);
+        movement.Move(playerRB, direction, moveSpeed, onPlat, platform);
 
         change.ChangeMaterial(playerCol, direction, layerMask, material2D);
 
         jump.Grounded(playerCol, layerMask);
     } 
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Platform"))
+        {
+            onPlat = true;
+            Debug.Log("hi");
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Platform"))
+            onPlat = false;
+    }
 }

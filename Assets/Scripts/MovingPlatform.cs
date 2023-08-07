@@ -1,44 +1,50 @@
 using System.Collections;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
     public float speed;
-    public Transform startPos;
-    public Transform endPos;
+    public Transform start;
+    public Transform end;
     public Rigidbody2D platRB;
+    public Vector2 platVelocity;
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
     private void Awake()
     {
-        gameObject.transform.position = startPos.position;
+        gameObject.transform.position = start.position;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(LerpPosition(endPos.position, speed));
-
-        // StartCoroutine(Plat(startPos, endPos, speed));
+        // StartCoroutine(LerpPosition(start.position, end.position, speed));
     }
 
-    /// <summary>
-    /// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
-    /// </summary>
-    private void FixedUpdate()
+    private void Update()
     {
+        if (transform.position == end.position)
+        {
+            StartCoroutine(LerpPosition(end.position, start.position, speed));
+        }
+        else if (transform.position == start.position)
+        {
+            StartCoroutine(LerpPosition(start.position, end.position, speed));
+        }
     }
 
-    IEnumerator LerpPosition(Vector2 targetPosition, float duration)
+    IEnumerator LerpPosition(Vector2 startPosition, Vector2 targetPosition, float duration)
     {
         float time = 0;
+
+        SetPlatVelocity(startPosition, targetPosition);
+        
         while (time < duration)
         {
-            platRB.MovePosition(Vector2.Lerp(startPos.position, targetPosition, time / duration));
+            platRB.MovePosition(Vector2.Lerp(startPosition, targetPosition, time / duration));
             time += Time.deltaTime;
             yield return null;
         }
@@ -47,17 +53,22 @@ public class MovingPlatform : MonoBehaviour
 
 
     // Moving platform using velocity
-    private void MovePlatform(Vector2 start, Vector2 end)
+    private void SetPlatVelocity(Vector2 start, Vector2 end)
     {
-        if ((Vector2)transform.position != end)
-        {
-            platRB.velocity = new Vector2(end.x - start.x, end.y - start.y).normalized;
-        }
+        platVelocity = new Vector2(end.x - start.x, end.y - start.y).normalized;
     }
 
-    // x: 1.94, y: 0.49
-    private void VelocityVector()
+    public Vector2 GetPlatVelocity()
     {
+        return platVelocity;
+    }
 
+    /// <summary>
+    /// Callback to draw gizmos that are pickable and always drawn.
+    /// </summary>
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(start.position, end.position);
     }
 }
