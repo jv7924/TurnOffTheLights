@@ -21,7 +21,7 @@ public class MovingPlatform : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // StartCoroutine(LerpPosition(start.position, end.position, speed));
+        
     }
 
     private void Update()
@@ -40,7 +40,7 @@ public class MovingPlatform : MonoBehaviour
     {
         float time = 0;
 
-        SetPlatVelocity(startPosition, targetPosition);
+        // SetPlatVelocity(startPosition, targetPosition);
         
         while (time < duration)
         {
@@ -52,16 +52,16 @@ public class MovingPlatform : MonoBehaviour
     }
 
 
-    // Moving platform using velocity
-    private void SetPlatVelocity(Vector2 start, Vector2 end)
-    {
-        platVelocity = new Vector2(end.x - start.x, end.y - start.y).normalized;
-    }
+    // // Moving platform using velocity
+    // private void SetPlatVelocity(Vector2 start, Vector2 end)
+    // {
+    //     platVelocity = new Vector2(end.x - start.x, end.y - start.y) / speed;
+    // }
 
-    public Vector2 GetPlatVelocity()
-    {
-        return platVelocity;
-    }
+    // public Vector2 GetPlatVelocity()
+    // {
+    //     return platVelocity;
+    // }
 
     /// <summary>
     /// Callback to draw gizmos that are pickable and always drawn.

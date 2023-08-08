@@ -7,16 +7,16 @@ public class PlayerMovement : MonoBehaviour
     public void Move(Rigidbody2D player, float direction, float speed, bool onPlat, MovingPlatform platform)
     {
         FlipPlayer(direction);
-        if (!onPlat)
-        {
+        // if (!onPlat)
+        // {
             player.velocity = new Vector2(direction * speed, player.velocity.y);
-            Debug.Log(player.velocity);
-        }
-        else if (onPlat)
-        {
-            player.velocity = new Vector2((direction * speed) + platform.GetPlatVelocity().x, player.velocity.y + platform.GetPlatVelocity().y);
-            Debug.Log(player.velocity);
-        }
+            // Debug.Log(player.velocity);
+        // }
+        // else if (onPlat)
+        // {
+        //     player.velocity = new Vector2((direction * speed) + platform.GetPlatVelocity().x, player.velocity.y);
+        //     // Debug.Log(player.velocity);
+        // }
     }
 
     private void FlipPlayer(float direction)

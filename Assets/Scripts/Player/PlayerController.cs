@@ -73,14 +73,13 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Platform"))
         {
-            onPlat = true;
-            Debug.Log("hi");
+            gameObject.transform.SetParent(other.gameObject.transform, true);
         }
     }
 
     private void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Platform"))
-            onPlat = false;
+            gameObject.transform.parent = null;
     }
 }
