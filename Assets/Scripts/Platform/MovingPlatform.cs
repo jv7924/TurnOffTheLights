@@ -7,8 +7,7 @@ public class MovingPlatform : MonoBehaviour
     public float speed;
     public Transform start;
     public Transform end;
-    public Rigidbody2D platRB;
-    public Vector2 platVelocity;
+    // public Rigidbody2D platRB;
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
@@ -24,7 +23,7 @@ public class MovingPlatform : MonoBehaviour
         
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (transform.position == end.position)
         {
@@ -40,35 +39,21 @@ public class MovingPlatform : MonoBehaviour
     {
         float time = 0;
 
-        // SetPlatVelocity(startPosition, targetPosition);
-        
         while (time < duration)
         {
-            platRB.MovePosition(Vector2.Lerp(startPosition, targetPosition, time / duration));
+            // platRB.MovePosition(Vector2.Lerp(startPosition, targetPosition, time / duration));
+            transform.position = Vector2.Lerp(startPosition, targetPosition, time / duration);
             time += Time.deltaTime;
             yield return null;
         }
         transform.position = targetPosition;
     }
 
-
-    // // Moving platform using velocity
-    // private void SetPlatVelocity(Vector2 start, Vector2 end)
-    // {
-    //     platVelocity = new Vector2(end.x - start.x, end.y - start.y) / speed;
-    // }
-
-    // public Vector2 GetPlatVelocity()
-    // {
-    //     return platVelocity;
-    // }
-
     /// <summary>
     /// Callback to draw gizmos that are pickable and always drawn.
     /// </summary>
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
         Gizmos.DrawLine(start.position, end.position);
     }
 }
