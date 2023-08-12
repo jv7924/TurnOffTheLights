@@ -7,7 +7,8 @@ public class MovingPlatform : MonoBehaviour
     public float speed;
     public Transform start;
     public Transform end;
-    // public Rigidbody2D platRB;
+
+    [SerializeField] private Transform[] wayPoints;
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
@@ -25,29 +26,37 @@ public class MovingPlatform : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (transform.position == end.position)
-        {
-            StartCoroutine(LerpPosition(end.position, start.position, speed));
-        }
-        else if (transform.position == start.position)
-        {
-            StartCoroutine(LerpPosition(start.position, end.position, speed));
-        }
+    //     if (transform.position == end.position)
+    //     {
+    //         // StartCoroutine(LerpPosition(end.position, start.position, speed));
+    //         transform.position = Vector2.MoveTowards(transform.position, start.position, speed * Time.deltaTime);
+    //     }
+        // else if (transform.position == start.position)
+        // {
+            // StartCoroutine(LerpPosition(start.position, end.position, speed));
+            transform.position = Vector2.MoveTowards(transform.position, end.position, speed * Time.deltaTime);
+
+        // }
     }
 
-    IEnumerator LerpPosition(Vector2 startPosition, Vector2 targetPosition, float duration)
+    private void MovePlatform(Vector2 target, float speed)
     {
-        float time = 0;
-
-        while (time < duration)
-        {
-            // platRB.MovePosition(Vector2.Lerp(startPosition, targetPosition, time / duration));
-            transform.position = Vector2.Lerp(startPosition, targetPosition, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-        transform.position = targetPosition;
+        transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
     }
+
+    // IEnumerator LerpPosition(Vector2 startPosition, Vector2 targetPosition, float duration)
+    // {
+    //     float time = 0;
+
+    //     while (time < duration)
+    //     {
+    //         // platRB.MovePosition(Vector2.Lerp(startPosition, targetPosition, time / duration));
+    //         transform.position = Vector2.Lerp(startPosition, targetPosition, time / duration);
+    //         time += Time.deltaTime;
+    //         yield return null;
+    //     }
+    //     transform.position = targetPosition;
+    // }
 
     /// <summary>
     /// Callback to draw gizmos that are pickable and always drawn.

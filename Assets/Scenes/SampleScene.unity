@@ -587,9 +587,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3d3df9f5c4cba546b6297edb2aca1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 2
   start: {fileID: 33616534}
   end: {fileID: 1280648146}
+  wayPoints: []
 --- !u!114 &492448688
 MonoBehaviour:
   m_ObjectHideFlags: 0
