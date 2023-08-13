@@ -5,8 +5,9 @@ using UnityEngine;
 public class MovingPlatform : MonoBehaviour
 {
     public float speed;
-    public Transform start;
-    public Transform end;
+    private int currentWayPointIndex = 0;
+
+    public Rigidbody2D platRb;
 
     [SerializeField] private Transform[] wayPoints;
 
@@ -15,7 +16,7 @@ public class MovingPlatform : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        gameObject.transform.position = start.position;
+        gameObject.transform.position = wayPoints[0].position;
     }
 
     // Start is called before the first frame update
@@ -24,19 +25,16 @@ public class MovingPlatform : MonoBehaviour
         
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-    //     if (transform.position == end.position)
-    //     {
-    //         // StartCoroutine(LerpPosition(end.position, start.position, speed));
-    //         transform.position = Vector2.MoveTowards(transform.position, start.position, speed * Time.deltaTime);
-    //     }
-        // else if (transform.position == start.position)
-        // {
-            // StartCoroutine(LerpPosition(start.position, end.position, speed));
-            transform.position = Vector2.MoveTowards(transform.position, end.position, speed * Time.deltaTime);
+        if (Vector2.Distance(wayPoints[currentWayPointIndex].position, transform.position) < .001f)
+        {
+            currentWayPointIndex++;
+            if (currentWayPointIndex >= wayPoints.Length)
+                currentWayPointIndex = 0;
+        }
 
-        // }
+        MovePlatform(wayPoints[currentWayPointIndex].position, speed);
     }
 
     private void MovePlatform(Vector2 target, float speed)
@@ -63,6 +61,6 @@ public class MovingPlatform : MonoBehaviour
     /// </summary>
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(start.position, end.position);
+        Gizmos.DrawLine(wayPoints[0].position, wayPoints[1].position);
     }
 }
