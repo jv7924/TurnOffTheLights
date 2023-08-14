@@ -7,13 +7,8 @@ public class MovingPlatform : MonoBehaviour
     public float speed;
     private int currentWayPointIndex = 0;
 
-    public Rigidbody2D platRb;
-
     [SerializeField] private Transform[] wayPoints;
 
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
     private void Awake()
     {
         gameObject.transform.position = wayPoints[0].position;
@@ -25,7 +20,7 @@ public class MovingPlatform : MonoBehaviour
         
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (Vector2.Distance(wayPoints[currentWayPointIndex].position, transform.position) < .001f)
         {
