@@ -4,28 +4,24 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField, Range(.1f, 1f)]
-    private float distCast = .1f;
+    [SerializeField, Range(.1f, 1f)] private float wallCheckDistCast;
+    [SerializeField, Range(.1f, 1f)] private float groundCheckDistCast;
+    [SerializeField, Range(.1f, 8f)] private float playerCheckDistcast;
     private float angle = 0f;
 
     // Layers
-    [SerializeField] 
-    private LayerMask groundLayer;
-    [SerializeField] 
-    private LayerMask playerLayer;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask playerLayer;
 
     private Collider2D col;
     private Rigidbody2D rb;
 
-    [SerializeField]
-    private float moveSpeed = 5f;
-    [SerializeField]
-    private float direction = 1;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float direction = 1;
 
-    [SerializeField]
-    private bool groundCheck = true;
-    [SerializeField]
-    private bool wallCheck = true;
+    [SerializeField] private bool wallCheck = true;
+    [SerializeField] private bool groundCheck = true;
+    [SerializeField] private bool playerCheck = true;
 
     // private Vector2 direction;
     // Start is called before the first frame update
@@ -43,15 +39,15 @@ public class Enemy : MonoBehaviour
         if (groundCheck)
             GroundCheck();
 
-        if (PlayerInRange())
+        if (playerCheck && PlayerInRange())
             rb.velocity = new Vector2(direction * moveSpeed * 2, rb.velocity.y);
-        else
+        else 
             rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
     }
 
     private void WallCheck()
     {
-        RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center + new Vector3(.1f * direction, 0f, 0f), new Vector2(direction, 0f), distCast, groundLayer);
+        RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center + new Vector3(.1f * direction, 0f, 0f), new Vector2(direction, 0f), wallCheckDistCast, groundLayer);
 
         Color rayCol;
         if (raycastHit.collider != null)
@@ -62,7 +58,7 @@ public class Enemy : MonoBehaviour
         else 
             rayCol = Color.green;
 
-        Debug.DrawRay(col.bounds.center + new Vector3(.1f * direction, 0f, 0f), new Vector2(direction, 0f) * distCast, rayCol);
+        Debug.DrawRay(col.bounds.center + new Vector3(.1f * direction, 0f, 0f), new Vector2(direction, 0f) * wallCheckDistCast, rayCol);
 
         // RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size - new Vector3(0, .1f, 0), angle, new Vector2(direction, 0f), distCast, groundLayer);
         // Debug.DrawRay(col.bounds.center + new Vector3(0f, col.bounds.extents.y - .05f, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + distCast), rayCol);
@@ -74,7 +70,8 @@ public class Enemy : MonoBehaviour
     private void GroundCheck()
     {
         // RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center + new Vector3(col.bounds.extents.x + .01f, -.01f, 0f), new Vector2(direction, -1.5f), distCast, groundLayer);
-        RaycastHit2D raycastHit = Physics2D.BoxCast(new Vector2(col.bounds.center.x + (col.bounds.extents.x + .25f) * direction, col.bounds.center.y - col.bounds.extents.y), new Vector2(.5f, .5f), angle, new Vector2(direction, 0f), 0, groundLayer);
+        float boxSize = 0.5f;
+        RaycastHit2D raycastHit = Physics2D.BoxCast(new Vector2(col.bounds.center.x + (col.bounds.extents.x + (boxSize / 2)) * direction, col.bounds.center.y - col.bounds.extents.y), new Vector2(boxSize, boxSize), angle, new Vector2(direction, 0f), groundCheckDistCast, groundLayer);
 
         Color rayCol;
         if (raycastHit.collider != null)
@@ -87,8 +84,8 @@ public class Enemy : MonoBehaviour
             rayCol = Color.blue;
         } 
 
-        Debug.DrawRay(new Vector2(col.bounds.center.x + col.bounds.extents.x * direction, col.bounds.center.y - col.bounds.extents.y), new Vector2(direction * .5f, 0f), rayCol);
-        Debug.DrawRay(new Vector2(col.bounds.center.x + col.bounds.extents.x * direction, col.bounds.center.y - col.bounds.extents.y - .25f), new Vector2(direction * .5f, 0f), rayCol);
+        Debug.DrawRay(new Vector2(col.bounds.center.x + col.bounds.extents.x * direction, col.bounds.center.y - col.bounds.extents.y), new Vector2(direction * boxSize, 0f), rayCol);
+        Debug.DrawRay(new Vector2(col.bounds.center.x + col.bounds.extents.x * direction, col.bounds.center.y - col.bounds.extents.y - (boxSize / 2)), new Vector2(direction * boxSize, 0f), rayCol);
 
         // Debug.DrawRay(col.bounds.center + new Vector3(col.bounds.extents.x * direction - .01f, -.01f, 0f), new Vector2(direction, -1.5f) * distCast, rayCol);
     }
@@ -96,10 +93,10 @@ public class Enemy : MonoBehaviour
     private bool PlayerInRange()
     {
         // RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center, new Vector2(direction, 0f), 5f, playerLayer);
-        RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size - new Vector3(0, .5f, 1), angle, new Vector2(direction, 0f), 5f, playerLayer);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size - new Vector3(0, .5f, 1), angle, new Vector2(direction, 0f), playerCheckDistcast, playerLayer);
 
-        Debug.DrawRay(col.bounds.center + new Vector3(0f, col.bounds.extents.y, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + 5), Color.black);
-        Debug.DrawRay(col.bounds.center - new Vector3(0f, col.bounds.extents.y, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + 5), Color.black);
+        Debug.DrawRay(col.bounds.center + new Vector3(0f, col.bounds.extents.y, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + playerCheckDistcast), Color.black);
+        Debug.DrawRay(col.bounds.center - new Vector3(0f, col.bounds.extents.y, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + playerCheckDistcast), Color.black);
 
         if (raycastHit.collider != null)
         {
@@ -107,5 +104,16 @@ public class Enemy : MonoBehaviour
         }
         else
             return false;
+    }
+
+    /// <summary>
+    /// Sent when an incoming collider makes contact with this object's
+    /// collider (2D physics only).
+    /// </summary>
+    /// <param name="other">The Collision2D data associated with this collision.</param>
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+            Destroy(other.gameObject);
     }
 }
