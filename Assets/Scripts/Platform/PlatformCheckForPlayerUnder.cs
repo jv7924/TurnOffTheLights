@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class PlatformCheckForPlayerUnder : MonoBehaviour
 {
-    [SerializeField] private Transform playerTransform;
-    [SerializeField] private Collider2D playerCol;
-
-    private Transform platTransform;
     private Collider2D platCol;
     private bool under = false;
 
@@ -15,7 +11,6 @@ public class PlatformCheckForPlayerUnder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        platTransform = GetComponent<Transform>();
         platCol = GetComponent<Collider2D>();
     }
 
