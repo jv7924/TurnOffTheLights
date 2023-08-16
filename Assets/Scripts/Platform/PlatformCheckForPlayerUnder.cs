@@ -27,7 +27,7 @@ public class PlatformCheckForPlayerUnder : MonoBehaviour
 
     private void CheckForPlayerUnder()
     {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(transform.position, transform.localScale + new Vector3(1f, 0f, 0f), 0f, Vector2.down, 1f, playerLayer);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(transform.position, transform.localScale + new Vector3(0.5f, 0f, 0f), 0f, Vector2.down, 1f, playerLayer);
 
         Color rayCol;
         if (raycastHit.collider == null)
@@ -41,7 +41,7 @@ public class PlatformCheckForPlayerUnder : MonoBehaviour
             rayCol = Color.green;
         }
 
-        Debug.DrawRay(transform.position + new Vector3(transform.localScale.x/2 + 0.5f, 0, 0), Vector3.down * 1f, rayCol);
-        Debug.DrawRay(transform.position - new Vector3(transform.localScale.x/2 + 0.5f, 0, 0), Vector3.down * 1f, rayCol);
+        Debug.DrawRay(transform.position + new Vector3(transform.localScale.x/2 + 0.25f, 0, 0), Vector3.down * 1f, rayCol);
+        Debug.DrawRay(transform.position - new Vector3(transform.localScale.x/2 + 0.25f, 0, 0), Vector3.down * 1f, rayCol);
     }
 }
