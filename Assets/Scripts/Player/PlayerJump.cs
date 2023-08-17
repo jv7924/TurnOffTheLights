@@ -12,6 +12,11 @@ public class PlayerJump : MonoBehaviour
            player.velocity = new Vector2(player.velocity.x, speed);
     }
 
+    private void FastFall()
+    {
+        
+    }
+
     public void Grounded(Collider2D col, LayerMask layerMask)
     {
         float distCast = .05f;

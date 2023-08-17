@@ -18,13 +18,12 @@ public class PlayerController : MonoBehaviour
     [Range(0.0f, 10.0f), Tooltip("Player jump speed")]
     [SerializeField] private float jumpSpeed = 0;
 
+    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private PhysicsMaterial2D material2D;
+
     private Rigidbody2D playerRB;
     private Collider2D playerCol;
     private PlayerControl playerControl;
-    [SerializeField] private LayerMask layerMask;
-    
-    [SerializeField] private PhysicsMaterial2D material2D;
-
 
     private void Awake()
     {
@@ -39,10 +38,7 @@ public class PlayerController : MonoBehaviour
 
     private void PerformJump(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            jump.Jump(playerRB, jumpSpeed);
-        }
+        jump.Jump(playerRB, jumpSpeed);
     }
 
     // Start is called before the first frame update
