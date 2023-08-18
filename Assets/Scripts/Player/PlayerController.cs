@@ -13,10 +13,15 @@ public class PlayerController : MonoBehaviour
     
     [Space(5)]
     [Header("Movement Variables")]
-    [Range(0.0f, 10.0f), Tooltip("Player move speed")]
-    [SerializeField] private float moveSpeed = 0;
-    [Range(0.0f, 10.0f), Tooltip("Player jump speed")]
-    [SerializeField] private float jumpSpeed = 0;
+    [SerializeField, Range(0.0f, 10.0f), Tooltip("Player move speed")]
+    private float moveSpeed = 0;
+    [SerializeField, Range(0.0f, 10.0f), Tooltip("Player jump speed")]
+    private float jumpSpeed = 0;
+    [SerializeField, Range(0.0f, 2.0f), Tooltip("Player low jump fall speed")]
+    private float lowJumpMultiplier;
+    [SerializeField, Range(0.0f, 3.0f), Tooltip("Player fall speed")]
+    private float fallMultiplier;
+
 
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private PhysicsMaterial2D material2D;
@@ -33,13 +38,23 @@ public class PlayerController : MonoBehaviour
         playerControl = new PlayerControl();
         playerControl.Player.Enable();
 
-        playerControl.Player.Jump.performed += PerformJump;
+        // playerControl.Player.Jump.performed += PerformJump;
+        // playerControl.Player.Jump.canceled += PerformFastFall;
     }
 
-    private void PerformJump(InputAction.CallbackContext context)
+    private void PerformJump()
     {
-        jump.Jump(playerRB, jumpSpeed);
+        jump.Grounded(playerCol, layerMask);
+
+        bool buttonHeld = playerControl.Player.Jump.ReadValue<float>() > 0.1f;
+        jump.Jump(playerRB, jumpSpeed, lowJumpMultiplier, fallMultiplier, buttonHeld);
     }
+
+    // private void PerformFastFall(InputAction.CallbackContext context)
+    // {
+    //     Debug.Log("canceled");
+    //     jump.FastFall(playerRB);
+    // }
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +75,6 @@ public class PlayerController : MonoBehaviour
 
         change.ChangeMaterial(playerCol, direction, layerMask, material2D);
 
-        jump.Grounded(playerCol, layerMask);
+        PerformJump();
     } 
 }
