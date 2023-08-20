@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
         jump.Grounded(playerCol, layerMask);
 
         bool buttonHeld = playerControl.Player.Jump.ReadValue<float>() > 0.1f;
+        
         jump.Jump(playerRB, jumpSpeed, lowJumpMultiplier, fallMultiplier, buttonHeld);
     }
 
