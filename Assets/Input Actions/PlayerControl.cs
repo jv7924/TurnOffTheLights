@@ -105,6 +105,15 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LightBurst"",
+                    ""type"": ""Button"",
+                    ""id"": ""340c3dd5-9d99-404c-9b3d-8e57a980f001"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -140,6 +149,17 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
                     ""action"": ""MoveLight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37b0a30e-5622-40c6-82ff-17ee9e8915db"",
+                    ""path"": ""<Keyboard>/rightShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LightBurst"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -153,6 +173,7 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
         // Light
         m_Light = asset.FindActionMap("Light", throwIfNotFound: true);
         m_Light_MoveLight = m_Light.FindAction("MoveLight", throwIfNotFound: true);
+        m_Light_LightBurst = m_Light.FindAction("LightBurst", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -254,11 +275,13 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Light;
     private ILightActions m_LightActionsCallbackInterface;
     private readonly InputAction m_Light_MoveLight;
+    private readonly InputAction m_Light_LightBurst;
     public struct LightActions
     {
         private @PlayerControl m_Wrapper;
         public LightActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
         public InputAction @MoveLight => m_Wrapper.m_Light_MoveLight;
+        public InputAction @LightBurst => m_Wrapper.m_Light_LightBurst;
         public InputActionMap Get() { return m_Wrapper.m_Light; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -271,6 +294,9 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
                 @MoveLight.started -= m_Wrapper.m_LightActionsCallbackInterface.OnMoveLight;
                 @MoveLight.performed -= m_Wrapper.m_LightActionsCallbackInterface.OnMoveLight;
                 @MoveLight.canceled -= m_Wrapper.m_LightActionsCallbackInterface.OnMoveLight;
+                @LightBurst.started -= m_Wrapper.m_LightActionsCallbackInterface.OnLightBurst;
+                @LightBurst.performed -= m_Wrapper.m_LightActionsCallbackInterface.OnLightBurst;
+                @LightBurst.canceled -= m_Wrapper.m_LightActionsCallbackInterface.OnLightBurst;
             }
             m_Wrapper.m_LightActionsCallbackInterface = instance;
             if (instance != null)
@@ -278,6 +304,9 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
                 @MoveLight.started += instance.OnMoveLight;
                 @MoveLight.performed += instance.OnMoveLight;
                 @MoveLight.canceled += instance.OnMoveLight;
+                @LightBurst.started += instance.OnLightBurst;
+                @LightBurst.performed += instance.OnLightBurst;
+                @LightBurst.canceled += instance.OnLightBurst;
             }
         }
     }
@@ -290,5 +319,6 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
     public interface ILightActions
     {
         void OnMoveLight(InputAction.CallbackContext context);
+        void OnLightBurst(InputAction.CallbackContext context);
     }
 }

@@ -83,6 +83,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "LightBurst",
+                    "type": "Button",
+                    "id": "340c3dd5-9d99-404c-9b3d-8e57a980f001",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -118,6 +127,17 @@
                     "action": "MoveLight",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "37b0a30e-5622-40c6-82ff-17ee9e8915db",
+                    "path": "<Keyboard>/rightShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LightBurst",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

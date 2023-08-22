@@ -9,6 +9,7 @@ public class LightController : MonoBehaviour
     [Header("Scripts")]
     [SerializeField] private LightRotation lightRotation;
     [SerializeField] private LightFlicker lightFlicker;
+    [SerializeField] private LightBurst lightBurst;
 
     [Space(5)]
     [Header("Rotation Variables")]
@@ -27,7 +28,6 @@ public class LightController : MonoBehaviour
     {
         lightControl = new PlayerControl();
         lightControl.Light.Enable();
-
     }
 
     // Start is called before the first frame update
@@ -45,6 +45,10 @@ public class LightController : MonoBehaviour
         else    
             lightRotation.LightRotate(direction, rotateAngle, rotateSpeed);
 
-    
+        bool activate = lightControl.Light.LightBurst.ReadValue<float>() > 0.1f;
+        if (activate)
+        {
+            lightBurst.Burst(flashLight);    
+        }
     }
 }

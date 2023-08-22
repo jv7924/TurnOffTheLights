@@ -3806,6 +3806,10 @@ PrefabInstance:
       value: 8.627987
       objectReference: {fileID: 0}
     - target: {fileID: 8904231620300640443, guid: 8d425fcbf20568640910d82ea7c9bb24, type: 3}
+      propertyPath: lightBurst
+      value: 
+      objectReference: {fileID: 2054796363}
+    - target: {fileID: 8904231620300640443, guid: 8d425fcbf20568640910d82ea7c9bb24, type: 3}
       propertyPath: rotateAngle
       value: 60
       objectReference: {fileID: 0}
@@ -3816,6 +3820,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8904231619306555695, guid: 8d425fcbf20568640910d82ea7c9bb24, type: 3}
   m_PrefabInstance: {fileID: 2054796360}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2054796362 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8904231620300640446, guid: 8d425fcbf20568640910d82ea7c9bb24, type: 3}
+  m_PrefabInstance: {fileID: 2054796360}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2054796363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054796362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a32912be0d295944b08310e3aa5cfd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2114584568
 PrefabInstance:
   m_ObjectHideFlags: 0
