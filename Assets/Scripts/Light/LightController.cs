@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,13 +29,23 @@ public class LightController : MonoBehaviour
     {
         lightControl = new PlayerControl();
         lightControl.Light.Enable();
+
+        lightControl.Light.LightBurst.performed += PerformLightBurst;
+    }
+
+    private void PerformLightBurst(InputAction.CallbackContext context)
+    {
+        if (!lightBurst.BurstInProgress)
+            StartCoroutine(lightBurst.Burst(flashLight));
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(lightFlicker.Flicker(flashLight));
+        // StartCoroutine(lightFlicker.Flicker(flashLight));
     }
+
+
 
     // Update is called once per frame
     void Update()
@@ -44,11 +55,5 @@ public class LightController : MonoBehaviour
             lightRotation.LightRotate(direction, -rotateAngle, rotateSpeed);
         else    
             lightRotation.LightRotate(direction, rotateAngle, rotateSpeed);
-
-        bool activate = lightControl.Light.LightBurst.ReadValue<float>() > 0.1f;
-        if (activate)
-        {
-            lightBurst.Burst(flashLight);    
-        }
     }
 }
