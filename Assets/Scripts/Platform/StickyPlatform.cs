@@ -14,6 +14,7 @@ public class StickyPlatform : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        other.transform.SetParent(null);
+        if (other.gameObject.CompareTag("Player"))
+            other.transform.SetParent(null);
     }
 }
