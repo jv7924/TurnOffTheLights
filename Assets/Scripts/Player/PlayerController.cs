@@ -20,8 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Range(0.0f, 2.0f), Tooltip("Player low jump fall speed")]
     private float lowJumpMultiplier;
     [SerializeField, Range(0.0f, 3.0f), Tooltip("Player fall speed")]
-    private float fallMultiplier;
-
+    private float fallMultiplier; 
 
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private PhysicsMaterial2D material2D;
@@ -29,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D playerRB;
     private Collider2D playerCol;
     private PlayerControl playerControl;
+    private float direction;
 
     private void Awake()
     {
@@ -41,21 +41,6 @@ public class PlayerController : MonoBehaviour
         // playerControl.Player.Jump.performed += PerformJump;
         // playerControl.Player.Jump.canceled += PerformFastFall;
     }
-
-    private void PerformJump()
-    {
-        jump.Grounded(playerCol, layerMask);
-
-        bool buttonHeld = playerControl.Player.Jump.ReadValue<float>() > 0.1f;
-        
-        jump.Jump(playerRB, jumpSpeed, lowJumpMultiplier, fallMultiplier, buttonHeld);
-    }
-
-    // private void PerformFastFall(InputAction.CallbackContext context)
-    // {
-    //     Debug.Log("canceled");
-    //     jump.FastFall(playerRB);
-    // }
 
     // Start is called before the first frame update
     void Start()
@@ -71,11 +56,35 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float direction = playerControl.Player.Move.ReadValue<float>();
-        movement.Move(playerRB, direction, moveSpeed);
+        PerformMovement();
 
-        change.ChangeMaterial(playerCol, direction, layerMask, material2D);
+        change.ChangeMaterial(playerCol, GetDirection(), layerMask, material2D);
 
         PerformJump();
     } 
+
+    private void PerformJump()
+    {
+        jump.Grounded(playerCol, layerMask);
+
+        bool buttonHeld = playerControl.Player.Jump.ReadValue<float>() > 0.1f;
+        
+        jump.Jump(playerRB, jumpSpeed, lowJumpMultiplier, fallMultiplier, buttonHeld);
+    }
+
+    private void PerformMovement()
+    {
+        SetDirection();
+        movement.Move(playerRB, direction, moveSpeed);
+    }
+
+    private void SetDirection()
+    {
+        direction = playerControl.Player.Move.ReadValue<float>();
+    }
+
+    private float GetDirection()
+    {
+        return direction;
+    }
 }

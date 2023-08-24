@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMaterialChange : MonoBehaviour
 {
-    public void ChangeMaterial( Collider2D col, float direction, LayerMask layer, PhysicsMaterial2D material2D)
+    public void ChangeMaterial(Collider2D col, float direction, LayerMask layer, PhysicsMaterial2D material2D)
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size - new Vector3(0f, 1f, 0f), 0, new Vector2(direction, 0f), .1f, layer);
 
