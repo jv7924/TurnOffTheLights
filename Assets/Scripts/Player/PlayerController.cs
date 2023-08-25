@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
     private PlayerControl playerControl;
     private float direction;
 
+    HealthSystem heal;
+
     private void Awake()
     {
         playerRB = GetComponent<Rigidbody2D>();
@@ -37,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
         playerControl = new PlayerControl();
         playerControl.Player.Enable();
+        
 
         // playerControl.Player.Jump.performed += PerformJump;
         // playerControl.Player.Jump.canceled += PerformFastFall;
@@ -45,7 +48,9 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        heal = FindAnyObjectByType<HealthSystem>();
+        if (heal != null)
+            heal.OnPlayerDead += HandlePlayerDeadEvent;
     }
 
     // Update is called once per frame
@@ -86,5 +91,11 @@ public class PlayerController : MonoBehaviour
     private float GetDirection()
     {
         return direction;
+    }
+
+    private void HandlePlayerDeadEvent()
+    {
+        Debug.Log("The player has dead");
+        heal.OnPlayerDead -= HandlePlayerDeadEvent;
     }
 }

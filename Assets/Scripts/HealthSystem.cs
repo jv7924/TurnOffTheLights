@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HealthSystem : MonoBehaviour
 {
+    public delegate void PlayerDeadAction();
+    public event PlayerDeadAction OnPlayerDead;
+
     [SerializeField] private int maxHealth;
     [SerializeField] private int currentHealth;
 
@@ -19,12 +23,12 @@ public class HealthSystem : MonoBehaviour
         IsDead();
     }
 
-    private void Damage(int amount)
+    public void Damage(int amount)
     {
         currentHealth -= amount;
     }
 
-    private void Heal(int amount)
+    public void Heal(int amount)
     {
         bool canHeal = false;
 
@@ -47,6 +51,6 @@ public class HealthSystem : MonoBehaviour
     private void IsDead()
     {
         if (currentHealth <= 0)
-            Destroy(gameObject);
+            OnPlayerDead?.Invoke();
     }
 }

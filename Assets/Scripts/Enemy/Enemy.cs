@@ -23,6 +23,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private bool groundCheck = true;
     [SerializeField] private bool playerCheck = true;
 
+    [SerializeField] private int damageAmount;
+
     // private Vector2 direction;
     // Start is called before the first frame update
     void Start()
@@ -115,7 +117,7 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Damage");
+            other.gameObject.GetComponent<HealthSystem>().Damage(damageAmount);
         }
     }
 }
