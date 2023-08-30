@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerMovement movement;
     [SerializeField] private PlayerJump jump;
     [SerializeField] private PlayerMaterialChange change;
+    [SerializeField] private PlayerKnockBack knockBack;
     
     [Space(5)]
     [Header("Movement Variables")]
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour
     private PlayerControl playerControl;
     private float direction;
 
-    HealthSystem heal;
+    HealthSystem health;
 
     private void Awake()
     {
@@ -48,9 +49,11 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        heal = FindAnyObjectByType<HealthSystem>();
-        if (heal != null)
-            heal.OnPlayerDead += HandlePlayerDeadEvent;
+        health = GetComponent<HealthSystem>();
+        if (health != null)
+        {
+            health.OnPlayerDead += HandlePlayerDeadEvent;
+        }
     }
 
     // Update is called once per frame
@@ -96,6 +99,6 @@ public class PlayerController : MonoBehaviour
     private void HandlePlayerDeadEvent()
     {
         Debug.Log("The player has dead");
-        heal.OnPlayerDead -= HandlePlayerDeadEvent;
+        health.OnPlayerDead -= HandlePlayerDeadEvent;
     }
 }

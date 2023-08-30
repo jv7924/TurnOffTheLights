@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 8621365263020238125}
   - component: {fileID: 8621365263020238129}
   - component: {fileID: 8621365263020238124}
+  - component: {fileID: 1397424762167248403}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,8 +160,9 @@ MonoBehaviour:
   moveSpeed: 2
   direction: 1
   wallCheck: 1
-  groundCheck: 0
+  groundCheck: 1
   playerCheck: 1
+  damageAmount: 1
 --- !u!114 &8621365263020238124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,3 +242,17 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &1397424762167248403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8621365263020238134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9530f05af13a2cb42a2a2647fe4e4fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1
+  currentHealth: 0

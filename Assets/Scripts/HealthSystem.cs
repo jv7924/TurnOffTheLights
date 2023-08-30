@@ -8,6 +8,9 @@ public class HealthSystem : MonoBehaviour
     public delegate void PlayerDeadAction();
     public event PlayerDeadAction OnPlayerDead;
 
+    public delegate void PlayerTakeDamageAction();
+    public event PlayerTakeDamageAction OnPlayerTakeDamage;
+
     [SerializeField] private int maxHealth;
     [SerializeField] private int currentHealth;
 
@@ -26,6 +29,10 @@ public class HealthSystem : MonoBehaviour
     public void Damage(int amount)
     {
         currentHealth -= amount;
+        if (currentHealth > 0)
+        {
+            OnPlayerTakeDamage?.Invoke();
+        }
     }
 
     public void Heal(int amount)

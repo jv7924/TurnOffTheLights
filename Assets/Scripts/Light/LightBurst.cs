@@ -12,9 +12,7 @@ public class LightBurst : MonoBehaviour
 
     public IEnumerator Burst(Light2D light)
     {
-        Debug.Log("in burst");
         BurstInProgress = true;
-        // light.intensity = 5;
 
         float timeElapsed = 0;
         while (timeElapsed < lerpDuration)
@@ -32,14 +30,12 @@ public class LightBurst : MonoBehaviour
         BurstInProgress = false;
     }
 
-    private void DamageEnemy(GameObject gameObject)
+    private void OnTriggerStay2D(Collider2D other)
     {
-        Destroy(gameObject);
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (BurstInProgress && other.gameObject.CompareTag("Enemy"))
-            DamageEnemy(other.gameObject);
+        if (other.gameObject.CompareTag("Enemy") && BurstInProgress)
+        {
+            Debug.Log("Enemy in range");
+            other.gameObject.GetComponent<HealthSystem>().Damage(1);
+        }
     }
 }

@@ -257,6 +257,8 @@ MonoBehaviour:
   change: {fileID: 8904231619306555688}
   moveSpeed: 4
   jumpSpeed: 7.5
+  lowJumpMultiplier: 0
+  fallMultiplier: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 8
@@ -421,6 +423,8 @@ GameObject:
   - component: {fileID: 8904231620300640443}
   - component: {fileID: 8904231620300640445}
   - component: {fileID: 8904231620300640442}
+  - component: {fileID: 2004745374317731067}
+  - component: {fileID: 3719762529751848758}
   m_Layer: 0
   m_Name: Flash Light
   m_TagString: Untagged
@@ -510,6 +514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightRotation: {fileID: 8904231620300640445}
   lightFlicker: {fileID: 8904231620300640442}
+  lightBurst: {fileID: 0}
   rotateSpeed: 4.04
   rotateAngle: 45
   flashLight: {fileID: 8904231619928214451}
@@ -537,3 +542,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd6cb453b697a04d9c9b8db2d9572bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2004745374317731067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8904231620300640446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a32912be0d295944b08310e3aa5cfd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!60 &3719762529751848758
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8904231620300640446}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.5738913, y: 0.046829447}
+      - {x: 11, y: -18.205856}
+      - {x: 12.5, y: -9.815795}
+      - {x: 12.5, y: 11.979797}
+      - {x: 11, y: 19.910843}

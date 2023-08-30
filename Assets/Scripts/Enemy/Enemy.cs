@@ -25,12 +25,17 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private int damageAmount;
 
+    private HealthSystem health;
+
     // private Vector2 direction;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
+        health = GetComponent<HealthSystem>();
+        if (health != null)
+            health.OnPlayerDead += HandleEnemyDeadEvent;
     }
 
     private void FixedUpdate()
@@ -106,6 +111,12 @@ public class Enemy : MonoBehaviour
         }
         else
             return false;
+    }
+
+    private void HandleEnemyDeadEvent()
+    {
+        Debug.Log("Enemy Dead");
+        health.OnPlayerDead -= HandleEnemyDeadEvent;
     }
 
     /// <summary>
