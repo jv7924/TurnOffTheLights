@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerMovement movement;
     [SerializeField] private PlayerJump jump;
     [SerializeField] private PlayerMaterialChange change;
-    [SerializeField] private PlayerKnockBack knockBack;
+    [SerializeField] private PlayerIFrames iFrames;
     
     [Space(5)]
     [Header("Movement Variables")]
@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private float fallMultiplier; 
 
     [SerializeField] private LayerMask layerMask;
+    [SerializeField] private int layer;
     [SerializeField] private PhysicsMaterial2D material2D;
 
     private Rigidbody2D playerRB;
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
         health = GetComponent<HealthSystem>();
         if (health != null)
         {
+            health.OnPlayerTakeDamage += HandlePlayerDamageEvent;
             health.OnPlayerDead += HandlePlayerDeadEvent;
         }
     }
@@ -96,9 +98,13 @@ public class PlayerController : MonoBehaviour
         return direction;
     }
 
+    private void HandlePlayerDamageEvent()
+    {
+        StartCoroutine(iFrames.InvinsibilityFrames(layer));
+    }
+
     private void HandlePlayerDeadEvent()
     {
         Debug.Log("The player has dead");
-        health.OnPlayerDead -= HandlePlayerDeadEvent;
     }
 }
