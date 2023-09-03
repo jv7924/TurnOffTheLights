@@ -7,7 +7,7 @@ public class PlatformCheckForPlayerUnder : MonoBehaviour
     private Collider2D platCol;
     private bool under = false;
 
-    [SerializeField] private LayerMask playerLayer;
+    private int playerBitMask = (1 << 6) | (1 << 10);
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +27,7 @@ public class PlatformCheckForPlayerUnder : MonoBehaviour
 
     private void CheckForPlayerUnder()
     {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(transform.position, transform.localScale + new Vector3(0.5f, 0f, 0f), 0f, Vector2.down, 1f, playerLayer);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(transform.position, transform.localScale + new Vector3(0.5f, 0f, 0f), 0f, Vector2.down, 1f, playerBitMask);
 
         Color rayCol;
         if (raycastHit.collider == null)
