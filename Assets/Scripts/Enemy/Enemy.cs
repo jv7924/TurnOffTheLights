@@ -105,12 +105,14 @@ public class Enemy : MonoBehaviour
         Debug.DrawRay(col.bounds.center + new Vector3(0f, col.bounds.extents.y, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + playerCheckDistcast), Color.black);
         Debug.DrawRay(col.bounds.center - new Vector3(0f, col.bounds.extents.y, 0f), new Vector3(direction, 0f, 0f) * (col.bounds.extents.x + playerCheckDistcast), Color.black);
 
-        if (raycastHit.collider != null)
+        if (raycastHit.collider != null && raycastHit.collider.gameObject.CompareTag("Player"))
         {
             return true;
         }
         else
+        {
             return false;
+        }  
     }
 
     private void HandleEnemyDeadEvent()

@@ -6,6 +6,7 @@ public class MovingPlatform : MonoBehaviour
 {
     public float speed;
     private int currentWayPointIndex = 0;
+    private bool ready;
 
     [SerializeField] private Transform[] wayPoints;
 
@@ -34,7 +35,17 @@ public class MovingPlatform : MonoBehaviour
 
     private void MovePlatform(Vector2 target, float speed)
     {
-        transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        if (ready)
+            transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+    }
+
+    private IEnumerator Wait()
+    {
+        ready = false;
+
+        yield return new WaitForSecondsRealtime(5);
+
+        ready = true;
     }
 
     // IEnumerator LerpPosition(Vector2 startPosition, Vector2 targetPosition, float duration)
