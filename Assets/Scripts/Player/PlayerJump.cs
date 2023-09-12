@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerJump : MonoBehaviour
 {
-    private bool isGrounded = false;
+    // private bool isGrounded = false;
+    public bool isGrounded { get; private set; }
     bool jumped = false;
 
     public void Jump(Rigidbody2D player, float speed, float lowJumpMultiplier, float fallMultiplier, bool buttonHeld)

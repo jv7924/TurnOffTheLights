@@ -27,10 +27,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int layer;
     [SerializeField] private PhysicsMaterial2D material2D;
 
+    private const string RUN_ANIM = "Player_Run";
+    private const string IDLE_ANIM = "Player_Idle";
+    private const string JUMP_ANIM = "Player_Jump";
+    private const string FALL_ANIM = "Player_Fall";
+
     private Rigidbody2D playerRB;
     private Collider2D playerCol;
     private PlayerControl playerControl;
     private float direction;
+    private AnimationController animCon;
 
     HealthSystem health;
 
@@ -38,6 +44,7 @@ public class PlayerController : MonoBehaviour
     {
         playerRB = GetComponent<Rigidbody2D>();
         playerCol = GetComponent<Collider2D>();
+        animCon = GetComponent<AnimationController>();
 
         playerControl = new PlayerControl();
         playerControl.Player.Enable();
@@ -61,7 +68,23 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (playerRB.velocity.y > .1)
+        {
+            animCon.ChangeAnimationStates(JUMP_ANIM);
+            Debug.Log(playerRB.velocity.y);
+        }
+        else if (playerRB.velocity.y < -0.4f)
+        {
+            animCon.ChangeAnimationStates(FALL_ANIM);
+        }
+
+        if (jump.isGrounded)
+        {
+            if (playerRB.velocity.x > .1f || playerRB.velocity.x < -.1f)
+                animCon.ChangeAnimationStates(RUN_ANIM);
+            else
+                animCon.ChangeAnimationStates(IDLE_ANIM);
+        }
     }
 
     private void FixedUpdate()
@@ -86,6 +109,8 @@ public class PlayerController : MonoBehaviour
     {
         SetDirection();
         movement.Move(playerRB, direction, moveSpeed);
+
+        
     }
 
     private void SetDirection()
