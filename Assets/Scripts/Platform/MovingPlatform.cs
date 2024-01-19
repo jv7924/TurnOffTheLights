@@ -6,7 +6,7 @@ public class MovingPlatform : MonoBehaviour
 {
     public float speed;
     private int currentWayPointIndex = 0;
-    private bool ready;
+    public bool ready;
 
     [SerializeField] private Transform[] wayPoints;
 
@@ -43,7 +43,7 @@ public class MovingPlatform : MonoBehaviour
     {
         ready = false;
 
-        yield return new WaitForSecondsRealtime(5);
+        yield return new WaitForSecondsRealtime(1);
 
         ready = true;
     }
