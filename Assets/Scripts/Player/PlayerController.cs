@@ -71,7 +71,6 @@ public class PlayerController : MonoBehaviour
         if (playerRB.velocity.y > .1)
         {
             animCon.ChangeAnimationStates(JUMP_ANIM);
-            Debug.Log(playerRB.velocity.y);
         }
         else if (playerRB.velocity.y < -0.4f)
         {

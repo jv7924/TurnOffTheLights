@@ -15,12 +15,6 @@ public class MovingPlatform : MonoBehaviour
         gameObject.transform.position = wayPoints[0].position;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     private void FixedUpdate()
     {
         if (Vector2.Distance(wayPoints[currentWayPointIndex].position, transform.position) < .001f)
@@ -28,6 +22,8 @@ public class MovingPlatform : MonoBehaviour
             currentWayPointIndex++;
             if (currentWayPointIndex >= wayPoints.Length)
                 currentWayPointIndex = 0;
+        
+            StartCoroutine(Wait());
         }
 
         MovePlatform(wayPoints[currentWayPointIndex].position, speed);
@@ -43,9 +39,10 @@ public class MovingPlatform : MonoBehaviour
     {
         ready = false;
 
-        yield return new WaitForSecondsRealtime(1);
+        yield return new WaitForSecondsRealtime(1.5f);
 
         ready = true;
+
     }
 
     // IEnumerator LerpPosition(Vector2 startPosition, Vector2 targetPosition, float duration)

@@ -8,7 +8,7 @@ public class StickyPlatform : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.transform.SetParent(transform);
+            other.transform.SetParent(transform, true);
         }
     }
 

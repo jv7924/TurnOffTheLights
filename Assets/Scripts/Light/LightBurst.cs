@@ -8,10 +8,14 @@ public class LightBurst : MonoBehaviour
 {
     public bool BurstInProgress { get; private set; }
 
-    float lerpDuration = 2;
+    private bool damaged;
+
+    float lerpDuration = 1;
 
     public IEnumerator Burst(Light2D light)
     {
+        damaged = false;
+        
         BurstInProgress = true;
 
         float timeElapsed = 0;
@@ -32,10 +36,32 @@ public class LightBurst : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy") && BurstInProgress)
+        if (other.gameObject.CompareTag("Enemy") && BurstInProgress && !damaged)
         {
-            Debug.Log("Enemy in range");
             other.gameObject.GetComponent<HealthSystem>().Damage(1);
+            damaged = true;
         }
     }
+
+
+    /// <summary>
+    /// Sent when another object enters a trigger collider attached to this
+    /// object (2D physics only).
+    /// </summary>
+    /// <param name="other">The other Collider2D involved in this collision.</param>
+    // private void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if (other.gameObject.CompareTag("Enemy") && BurstInProgress)
+    //     {
+    //         bool firstTime = true;
+
+    //         while (firstTime)
+    //         {    
+    //             Debug.Log("inside flash");
+    //             other.gameObject.GetComponent<HealthSystem>().Damage(1);
+    //             firstTime = false;
+    //         }
+    //     }
+    // }
+
 }
