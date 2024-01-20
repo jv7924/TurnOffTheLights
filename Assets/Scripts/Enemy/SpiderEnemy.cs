@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class SpiderEnemy : MonoBehaviour
 {
+    public Transform startPos;
+    public Transform endPos;
+    public float attackDuration;
+    public float retractDuration;
+
     private Collider2D col;
     private int direction = 1;
     public int playerCheckDistcast = 5;
@@ -17,33 +22,59 @@ public class SpiderEnemy : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
-        if (PlayerInRange())
-        {
-            Debug.Log("Drop!");
-        }
-            
+    {
+        PlayerInRange();
     }
 
-    private bool PlayerInRange()
+    private void PlayerInRange()
     {
         // RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center, new Vector2(direction, 0f), 5f, playerLayer);
-        RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0, new Vector2(0f, -direction), playerCheckDistcast, playerLayer);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(col.bounds.center, col.bounds.size + new Vector3(1f, 0, 0), 0, new Vector2(0f, -direction), playerCheckDistcast, playerLayer);
 
         // Debug.DrawRay(col.bounds.center + new Vector3(col.bounds.extents.x, 0f, 0f), new Vector3(0f, direction, 0f) * (col.bounds.extents.x + playerCheckDistcast), Color.black);
         // Debug.DrawRay(col.bounds.center - new Vector3(col.bounds.extents.x, 0f, 0f), new Vector3(0f, direction, 0f) * (col.bounds.extents.x + playerCheckDistcast), Color.black);
 
         if (raycastHit.collider != null && raycastHit.collider.gameObject.CompareTag("Player"))
         {
-            Debug.DrawRay(col.bounds.center + new Vector3(col.bounds.extents.x, 0f, 0f), new Vector3(0f, -direction, 0f) * (col.bounds.extents.y + playerCheckDistcast), Color.green);
-            Debug.DrawRay(col.bounds.center - new Vector3(col.bounds.extents.x, 0f, 0f), new Vector3(0f, -direction, 0f) * (col.bounds.extents.y + playerCheckDistcast), Color.green);
-            return true;
+            Debug.DrawRay(col.bounds.center + new Vector3(col.bounds.extents.x + .5f, 0f, 0f), new Vector3(0f, -direction, 0f) * (col.bounds.extents.y + playerCheckDistcast), Color.green);
+            Debug.DrawRay(col.bounds.center - new Vector3(col.bounds.extents.x + .5f, 0f, 0f), new Vector3(0f, -direction, 0f) * (col.bounds.extents.y + playerCheckDistcast), Color.green);
+           
+            StartCoroutine(Attack(endPos.position, attackDuration));
         }
         else
         {
-            Debug.DrawRay(col.bounds.center + new Vector3(col.bounds.extents.x, 0f, 0f), new Vector3(0f, -direction, 0f) * (col.bounds.extents.y + playerCheckDistcast), Color.red);
-            Debug.DrawRay(col.bounds.center - new Vector3(col.bounds.extents.x, 0f, 0f), new Vector3(0f, -direction, 0f) * (col.bounds.extents.y + playerCheckDistcast), Color.red);
-            return false;
-        }  
+            Debug.DrawRay(col.bounds.center + new Vector3(col.bounds.extents.x + .5f, 0f, 0f), new Vector3(0f, -direction, 0f) * (col.bounds.extents.y + playerCheckDistcast), Color.red);
+            Debug.DrawRay(col.bounds.center - new Vector3(col.bounds.extents.x + .5f, 0f, 0f), new Vector3(0f, -direction, 0f) * (col.bounds.extents.y + playerCheckDistcast), Color.red);
+            
+            // StartCoroutine(Retract(startPos.position, retractDuration));
+        }
+    }
+
+    private IEnumerator Attack(Vector2 targetPosition, float duration)
+    {
+        float time = 0;
+        Vector2 startPosition = transform.position;
+        while(time < duration)
+        {
+            transform.position = Vector2.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        
+        transform.position = targetPosition;
+    }
+
+    private IEnumerator Retract(Vector2 targetPosition, float duration)
+    {
+        float time = 0;
+        Vector2 startPosition = transform.position;
+        while (time < duration)
+        {
+            transform.position = Vector2.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = targetPosition;
     }
 }
