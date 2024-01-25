@@ -111,7 +111,6 @@ public class PlayerController : MonoBehaviour
 
         
     }
-
     private void SetDirection()
     {
         direction = playerControl.Player.Move.ReadValue<float>();
