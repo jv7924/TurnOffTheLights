@@ -35,20 +35,23 @@ public class Enemy : MonoBehaviour
         col = GetComponent<Collider2D>();
         health = GetComponent<HealthSystem>();
         if (health != null)
+        {
             health.OnPlayerDead += HandleEnemyDeadEvent;
+            health.OnPlayerTakeDamage += HandleEnemyDamagedEvent;
+        }
     }
 
     private void FixedUpdate()
     {
         if (wallCheck)
             WallCheck();
-        
+
         if (groundCheck)
             GroundCheck();
 
         if (playerCheck && PlayerInRange())
             rb.velocity = new Vector2(direction * moveSpeed * 2, rb.velocity.y);
-        else 
+        else
             rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
     }
 
@@ -60,9 +63,9 @@ public class Enemy : MonoBehaviour
         if (raycastHit.collider != null)
         {
             rayCol = Color.red;
-            direction  *= -1;
+            direction *= -1;
         }
-        else 
+        else
             rayCol = Color.green;
 
         Debug.DrawRay(col.bounds.center + new Vector3(.1f * direction, 0f, 0f), new Vector2(direction, 0f) * wallCheckDistCast, rayCol);
@@ -89,7 +92,7 @@ public class Enemy : MonoBehaviour
         {
             direction *= -1;
             rayCol = Color.blue;
-        } 
+        }
 
         Debug.DrawRay(new Vector2(col.bounds.center.x + col.bounds.extents.x * direction, col.bounds.center.y - col.bounds.extents.y), new Vector2(direction * boxSize, 0f), rayCol);
         Debug.DrawRay(new Vector2(col.bounds.center.x + col.bounds.extents.x * direction, col.bounds.center.y - col.bounds.extents.y - (boxSize / 2)), new Vector2(direction * boxSize, 0f), rayCol);
@@ -112,13 +115,30 @@ public class Enemy : MonoBehaviour
         else
         {
             return false;
-        }  
+        }
+    }
+
+    private IEnumerator EnemyStunned()
+    {
+        float ogMoveSpeed = moveSpeed;
+        moveSpeed = 0;
+
+        yield return new WaitForSecondsRealtime(2.0f);
+
+        moveSpeed = ogMoveSpeed;
+    }
+
+    private void HandleEnemyDamagedEvent()
+    {
+        Debug.Log("Enemy damaged");
+        StartCoroutine(EnemyStunned());
     }
 
     private void HandleEnemyDeadEvent()
     {
         Debug.Log("Enemy Dead");
         health.OnPlayerDead -= HandleEnemyDeadEvent;
+        health.OnPlayerTakeDamage -= HandleEnemyDamagedEvent;
     }
 
     /// <summary>
